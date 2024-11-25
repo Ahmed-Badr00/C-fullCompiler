@@ -1,0 +1,5 @@
+program test9 {
+    int x;
+    read x;
+    write x;
+}

@@ -1,0 +1,5 @@
+program test2 {
+    float y;
+    y = 15.5;
+    write y;
+}

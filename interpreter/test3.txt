@@ -1,0 +1,7 @@
+program test3 {
+    int x;
+    x = 5;
+    write x;
+    x = 20;
+    write x;
+}

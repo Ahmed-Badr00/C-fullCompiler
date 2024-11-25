@@ -1,0 +1,7 @@
+program test5 {
+    int x;
+    float y;
+    x = 5;
+    y = x + 3.5;
+    write y;
+}

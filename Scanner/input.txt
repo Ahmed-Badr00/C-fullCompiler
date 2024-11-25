@@ -1,0 +1,24 @@
+/* Test identifiers */
+valid_id
+another@id
+third.id
+invalid_*id
+x_1
+y.2
+z@3
+
+/* Test numbers */
+123
+45.67
+2.3E-4
+12.3eX
+89.1e+2
+
+/* Test keywords */
+if then else
+IF THEN ELSE
+If Then Else
+
+/* Test invalid cases *
+abc_*
+123abc
