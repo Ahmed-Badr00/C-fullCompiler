@@ -1,0 +1,82 @@
+Program ComprehensiveTest {
+    /* Variable declarations with different types */
+    int x;
+    float y;
+    int numbers[20];
+    float values[10];
+
+    /* Simple assignments */
+    x = 42;
+    y = 3.14159;
+
+    /* Array operations */
+    numbers[0] = 1;
+    numbers[1] = numbers[0] * 2;
+    values[x] = y;
+
+    /* Nested if-then-else */
+    if (x < 50) then {
+        if (y > 3.0) then {
+            x = x + 1;
+        } else {
+            x = x - 1;
+        }
+    } else {
+        y = y * 2.0;
+    }
+
+    /* Complex expressions */
+    x = (5 * 3) + (10 - 2);
+    y = x * (y + 3.14);
+
+    /* Multiple relational operators */
+    if (x <= 100) then {
+        if (y >= 10.0) then {
+            if (x == 42) then {
+                x = 0;
+            }
+        }
+    }
+
+    /* Nested loops */
+    while (x > 0) {
+        while (y > 1.0) {
+            y = y - 0.5;
+            if (y < 2.0) then {
+                x = x - 1;
+            }
+        }
+        x = x - 1;
+    }
+
+    /* Mixed expressions */
+    x = numbers[5] + numbers[3] * numbers[1];
+    values[3] = values[1] + values[2] * 3.14;
+
+    /* Testing all arithmetic operators */
+    x = x + 1;  /* Addition */
+    x = x - 1;  /* Subtraction */
+    x = x * 2;  /* Multiplication */
+    x = x / 2;  /* Division */
+
+    /* Testing all relational operators */
+    if (x < 10) then x = 0;
+    if (x > 20) then x = 1;
+    if (x <= 30) then x = 2;
+    if (x >= 40) then x = 3;
+    if (x == 50) then x = 4;
+    if (x != 60) then x = 5;
+
+    /* Compound statements with mixed declarations and statements */
+    {
+        int temp;
+        float result;
+        temp = x * 2;
+        result = y / 2.0;
+        
+        while (temp > 0) {
+            temp = temp - 1;
+            result = result + 1.0;
+        }
+    }
+}

@@ -1,0 +1,773 @@
+Grammar
+
+    0 $accept: program $end
+
+    1 $@1: %empty
+
+    2 program: TOKEN_PROGRAM TOKEN_ID TOKEN_LBRACE $@1 declarations_and_statements TOKEN_RBRACE
+
+    3 declarations_and_statements: %empty
+    4                            | declarations_and_statements var_declaration
+    5                            | declarations_and_statements statement
+
+    6 var_declaration: type_specifier TOKEN_ID TOKEN_SEMICOLON
+    7                | type_specifier TOKEN_ID TOKEN_LBRACKET TOKEN_NUM TOKEN_RBRACKET TOKEN_SEMICOLON
+
+    8 type_specifier: TOKEN_INT
+    9               | TOKEN_FLOAT
+
+   10 statement: assignment_stmt
+   11          | compound_stmt
+   12          | selection_stmt
+   13          | iteration_stmt
+
+   14 assignment_stmt: var TOKEN_ASSIGN expression TOKEN_SEMICOLON
+
+   15 var: TOKEN_ID
+   16    | TOKEN_ID TOKEN_LBRACKET expression TOKEN_RBRACKET
+
+   17 $@2: %empty
+
+   18 compound_stmt: TOKEN_LBRACE $@2 declarations_and_statements TOKEN_RBRACE
+
+   19 selection_stmt: if_part statement
+
+   20 $@3: %empty
+
+   21 selection_stmt: if_part statement TOKEN_ELSE $@3 statement
+
+   22 if_part: TOKEN_IF TOKEN_LPAREN expression TOKEN_RPAREN TOKEN_THEN
+
+   23 $@4: %empty
+
+   24 iteration_stmt: TOKEN_WHILE TOKEN_LPAREN $@4 expression TOKEN_RPAREN statement
+
+   25 expression: additive_expression
+   26           | additive_expression TOKEN_RELOP additive_expression
+
+   27 additive_expression: term
+   28                    | additive_expression TOKEN_ADDOP term
+
+   29 term: factor
+   30     | term TOKEN_MULOP factor
+
+   31 factor: TOKEN_LPAREN expression TOKEN_RPAREN
+   32       | var
+   33       | TOKEN_NUM
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    TOKEN_ID <string_val> (258) 2 6 7 15 16
+    TOKEN_NUM <string_val> (259) 7 33
+    TOKEN_IF (260) 22
+    TOKEN_ELSE (261) 21
+    TOKEN_INT (262) 8
+    TOKEN_FLOAT (263) 9
+    TOKEN_WHILE (264) 24
+    TOKEN_PROGRAM (265) 2
+    TOKEN_THEN (266) 22
+    TOKEN_RELOP (267) 26
+    TOKEN_ADDOP (268) 28
+    TOKEN_MULOP (269) 30
+    TOKEN_ASSIGN (270) 14
+    TOKEN_LBRACE (271) 2 18
+    TOKEN_RBRACE (272) 2 18
+    TOKEN_LPAREN (273) 22 24 31
+    TOKEN_RPAREN (274) 22 24 31
+    TOKEN_LBRACKET (275) 7 16
+    TOKEN_RBRACKET (276) 7 16
+    TOKEN_SEMICOLON (277) 6 7 14
+    LOWER_THAN_ELSE (278)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (24)
+        on left: 0
+    program (25)
+        on left: 2
+        on right: 0
+    $@1 (26)
+        on left: 1
+        on right: 2
+    declarations_and_statements (27)
+        on left: 3 4 5
+        on right: 2 4 5 18
+    var_declaration (28)
+        on left: 6 7
+        on right: 4
+    type_specifier (29)
+        on left: 8 9
+        on right: 6 7
+    statement (30)
+        on left: 10 11 12 13
+        on right: 5 19 21 24
+    assignment_stmt (31)
+        on left: 14
+        on right: 10
+    var (32)
+        on left: 15 16
+        on right: 14 32
+    compound_stmt (33)
+        on left: 18
+        on right: 11
+    $@2 (34)
+        on left: 17
+        on right: 18
+    selection_stmt (35)
+        on left: 19 21
+        on right: 12
+    $@3 (36)
+        on left: 20
+        on right: 21
+    if_part (37)
+        on left: 22
+        on right: 19 21
+    iteration_stmt (38)
+        on left: 24
+        on right: 13
+    $@4 (39)
+        on left: 23
+        on right: 24
+    expression (40)
+        on left: 25 26
+        on right: 14 16 22 24 31
+    additive_expression (41)
+        on left: 27 28
+        on right: 25 26 28
+    term (42)
+        on left: 29 30
+        on right: 27 28 30
+    factor (43)
+        on left: 31 32 33
+        on right: 29 30
+
+
+State 0
+
+    0 $accept: . program $end
+
+    TOKEN_PROGRAM  shift, and go to state 1
+
+    program  go to state 2
+
+
+State 1
+
+    2 program: TOKEN_PROGRAM . TOKEN_ID TOKEN_LBRACE $@1 declarations_and_statements TOKEN_RBRACE
+
+    TOKEN_ID  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    2 program: TOKEN_PROGRAM TOKEN_ID . TOKEN_LBRACE $@1 declarations_and_statements TOKEN_RBRACE
+
+    TOKEN_LBRACE  shift, and go to state 5
+
+
+State 4
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 5
+
+    2 program: TOKEN_PROGRAM TOKEN_ID TOKEN_LBRACE . $@1 declarations_and_statements TOKEN_RBRACE
+
+    $default  reduce using rule 1 ($@1)
+
+    $@1  go to state 6
+
+
+State 6
+
+    2 program: TOKEN_PROGRAM TOKEN_ID TOKEN_LBRACE $@1 . declarations_and_statements TOKEN_RBRACE
+
+    $default  reduce using rule 3 (declarations_and_statements)
+
+    declarations_and_statements  go to state 7
+
+
+State 7
+
+    2 program: TOKEN_PROGRAM TOKEN_ID TOKEN_LBRACE $@1 declarations_and_statements . TOKEN_RBRACE
+    4 declarations_and_statements: declarations_and_statements . var_declaration
+    5                            | declarations_and_statements . statement
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_IF      shift, and go to state 9
+    TOKEN_INT     shift, and go to state 10
+    TOKEN_FLOAT   shift, and go to state 11
+    TOKEN_WHILE   shift, and go to state 12
+    TOKEN_LBRACE  shift, and go to state 13
+    TOKEN_RBRACE  shift, and go to state 14
+
+    var_declaration  go to state 15
+    type_specifier   go to state 16
+    statement        go to state 17
+    assignment_stmt  go to state 18
+    var              go to state 19
+    compound_stmt    go to state 20
+    selection_stmt   go to state 21
+    if_part          go to state 22
+    iteration_stmt   go to state 23
+
+
+State 8
+
+   15 var: TOKEN_ID .
+   16    | TOKEN_ID . TOKEN_LBRACKET expression TOKEN_RBRACKET
+
+    TOKEN_LBRACKET  shift, and go to state 24
+
+    $default  reduce using rule 15 (var)
+
+
+State 9
+
+   22 if_part: TOKEN_IF . TOKEN_LPAREN expression TOKEN_RPAREN TOKEN_THEN
+
+    TOKEN_LPAREN  shift, and go to state 25
+
+
+State 10
+
+    8 type_specifier: TOKEN_INT .
+
+    $default  reduce using rule 8 (type_specifier)
+
+
+State 11
+
+    9 type_specifier: TOKEN_FLOAT .
+
+    $default  reduce using rule 9 (type_specifier)
+
+
+State 12
+
+   24 iteration_stmt: TOKEN_WHILE . TOKEN_LPAREN $@4 expression TOKEN_RPAREN statement
+
+    TOKEN_LPAREN  shift, and go to state 26
+
+
+State 13
+
+   18 compound_stmt: TOKEN_LBRACE . $@2 declarations_and_statements TOKEN_RBRACE
+
+    $default  reduce using rule 17 ($@2)
+
+    $@2  go to state 27
+
+
+State 14
+
+    2 program: TOKEN_PROGRAM TOKEN_ID TOKEN_LBRACE $@1 declarations_and_statements TOKEN_RBRACE .
+
+    $default  reduce using rule 2 (program)
+
+
+State 15
+
+    4 declarations_and_statements: declarations_and_statements var_declaration .
+
+    $default  reduce using rule 4 (declarations_and_statements)
+
+
+State 16
+
+    6 var_declaration: type_specifier . TOKEN_ID TOKEN_SEMICOLON
+    7                | type_specifier . TOKEN_ID TOKEN_LBRACKET TOKEN_NUM TOKEN_RBRACKET TOKEN_SEMICOLON
+
+    TOKEN_ID  shift, and go to state 28
+
+
+State 17
+
+    5 declarations_and_statements: declarations_and_statements statement .
+
+    $default  reduce using rule 5 (declarations_and_statements)
+
+
+State 18
+
+   10 statement: assignment_stmt .
+
+    $default  reduce using rule 10 (statement)
+
+
+State 19
+
+   14 assignment_stmt: var . TOKEN_ASSIGN expression TOKEN_SEMICOLON
+
+    TOKEN_ASSIGN  shift, and go to state 29
+
+
+State 20
+
+   11 statement: compound_stmt .
+
+    $default  reduce using rule 11 (statement)
+
+
+State 21
+
+   12 statement: selection_stmt .
+
+    $default  reduce using rule 12 (statement)
+
+
+State 22
+
+   19 selection_stmt: if_part . statement
+   21               | if_part . statement TOKEN_ELSE $@3 statement
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_IF      shift, and go to state 9
+    TOKEN_WHILE   shift, and go to state 12
+    TOKEN_LBRACE  shift, and go to state 13
+
+    statement        go to state 30
+    assignment_stmt  go to state 18
+    var              go to state 19
+    compound_stmt    go to state 20
+    selection_stmt   go to state 21
+    if_part          go to state 22
+    iteration_stmt   go to state 23
+
+
+State 23
+
+   13 statement: iteration_stmt .
+
+    $default  reduce using rule 13 (statement)
+
+
+State 24
+
+   16 var: TOKEN_ID TOKEN_LBRACKET . expression TOKEN_RBRACKET
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_NUM     shift, and go to state 31
+    TOKEN_LPAREN  shift, and go to state 32
+
+    var                  go to state 33
+    expression           go to state 34
+    additive_expression  go to state 35
+    term                 go to state 36
+    factor               go to state 37
+
+
+State 25
+
+   22 if_part: TOKEN_IF TOKEN_LPAREN . expression TOKEN_RPAREN TOKEN_THEN
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_NUM     shift, and go to state 31
+    TOKEN_LPAREN  shift, and go to state 32
+
+    var                  go to state 33
+    expression           go to state 38
+    additive_expression  go to state 35
+    term                 go to state 36
+    factor               go to state 37
+
+
+State 26
+
+   24 iteration_stmt: TOKEN_WHILE TOKEN_LPAREN . $@4 expression TOKEN_RPAREN statement
+
+    $default  reduce using rule 23 ($@4)
+
+    $@4  go to state 39
+
+
+State 27
+
+   18 compound_stmt: TOKEN_LBRACE $@2 . declarations_and_statements TOKEN_RBRACE
+
+    $default  reduce using rule 3 (declarations_and_statements)
+
+    declarations_and_statements  go to state 40
+
+
+State 28
+
+    6 var_declaration: type_specifier TOKEN_ID . TOKEN_SEMICOLON
+    7                | type_specifier TOKEN_ID . TOKEN_LBRACKET TOKEN_NUM TOKEN_RBRACKET TOKEN_SEMICOLON
+
+    TOKEN_LBRACKET   shift, and go to state 41
+    TOKEN_SEMICOLON  shift, and go to state 42
+
+
+State 29
+
+   14 assignment_stmt: var TOKEN_ASSIGN . expression TOKEN_SEMICOLON
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_NUM     shift, and go to state 31
+    TOKEN_LPAREN  shift, and go to state 32
+
+    var                  go to state 33
+    expression           go to state 43
+    additive_expression  go to state 35
+    term                 go to state 36
+    factor               go to state 37
+
+
+State 30
+
+   19 selection_stmt: if_part statement .
+   21               | if_part statement . TOKEN_ELSE $@3 statement
+
+    TOKEN_ELSE  shift, and go to state 44
+
+    $default  reduce using rule 19 (selection_stmt)
+
+
+State 31
+
+   33 factor: TOKEN_NUM .
+
+    $default  reduce using rule 33 (factor)
+
+
+State 32
+
+   31 factor: TOKEN_LPAREN . expression TOKEN_RPAREN
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_NUM     shift, and go to state 31
+    TOKEN_LPAREN  shift, and go to state 32
+
+    var                  go to state 33
+    expression           go to state 45
+    additive_expression  go to state 35
+    term                 go to state 36
+    factor               go to state 37
+
+
+State 33
+
+   32 factor: var .
+
+    $default  reduce using rule 32 (factor)
+
+
+State 34
+
+   16 var: TOKEN_ID TOKEN_LBRACKET expression . TOKEN_RBRACKET
+
+    TOKEN_RBRACKET  shift, and go to state 46
+
+
+State 35
+
+   25 expression: additive_expression .
+   26           | additive_expression . TOKEN_RELOP additive_expression
+   28 additive_expression: additive_expression . TOKEN_ADDOP term
+
+    TOKEN_RELOP  shift, and go to state 47
+    TOKEN_ADDOP  shift, and go to state 48
+
+    $default  reduce using rule 25 (expression)
+
+
+State 36
+
+   27 additive_expression: term .
+   30 term: term . TOKEN_MULOP factor
+
+    TOKEN_MULOP  shift, and go to state 49
+
+    $default  reduce using rule 27 (additive_expression)
+
+
+State 37
+
+   29 term: factor .
+
+    $default  reduce using rule 29 (term)
+
+
+State 38
+
+   22 if_part: TOKEN_IF TOKEN_LPAREN expression . TOKEN_RPAREN TOKEN_THEN
+
+    TOKEN_RPAREN  shift, and go to state 50
+
+
+State 39
+
+   24 iteration_stmt: TOKEN_WHILE TOKEN_LPAREN $@4 . expression TOKEN_RPAREN statement
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_NUM     shift, and go to state 31
+    TOKEN_LPAREN  shift, and go to state 32
+
+    var                  go to state 33
+    expression           go to state 51
+    additive_expression  go to state 35
+    term                 go to state 36
+    factor               go to state 37
+
+
+State 40
+
+    4 declarations_and_statements: declarations_and_statements . var_declaration
+    5                            | declarations_and_statements . statement
+   18 compound_stmt: TOKEN_LBRACE $@2 declarations_and_statements . TOKEN_RBRACE
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_IF      shift, and go to state 9
+    TOKEN_INT     shift, and go to state 10
+    TOKEN_FLOAT   shift, and go to state 11
+    TOKEN_WHILE   shift, and go to state 12
+    TOKEN_LBRACE  shift, and go to state 13
+    TOKEN_RBRACE  shift, and go to state 52
+
+    var_declaration  go to state 15
+    type_specifier   go to state 16
+    statement        go to state 17
+    assignment_stmt  go to state 18
+    var              go to state 19
+    compound_stmt    go to state 20
+    selection_stmt   go to state 21
+    if_part          go to state 22
+    iteration_stmt   go to state 23
+
+
+State 41
+
+    7 var_declaration: type_specifier TOKEN_ID TOKEN_LBRACKET . TOKEN_NUM TOKEN_RBRACKET TOKEN_SEMICOLON
+
+    TOKEN_NUM  shift, and go to state 53
+
+
+State 42
+
+    6 var_declaration: type_specifier TOKEN_ID TOKEN_SEMICOLON .
+
+    $default  reduce using rule 6 (var_declaration)
+
+
+State 43
+
+   14 assignment_stmt: var TOKEN_ASSIGN expression . TOKEN_SEMICOLON
+
+    TOKEN_SEMICOLON  shift, and go to state 54
+
+
+State 44
+
+   21 selection_stmt: if_part statement TOKEN_ELSE . $@3 statement
+
+    $default  reduce using rule 20 ($@3)
+
+    $@3  go to state 55
+
+
+State 45
+
+   31 factor: TOKEN_LPAREN expression . TOKEN_RPAREN
+
+    TOKEN_RPAREN  shift, and go to state 56
+
+
+State 46
+
+   16 var: TOKEN_ID TOKEN_LBRACKET expression TOKEN_RBRACKET .
+
+    $default  reduce using rule 16 (var)
+
+
+State 47
+
+   26 expression: additive_expression TOKEN_RELOP . additive_expression
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_NUM     shift, and go to state 31
+    TOKEN_LPAREN  shift, and go to state 32
+
+    var                  go to state 33
+    additive_expression  go to state 57
+    term                 go to state 36
+    factor               go to state 37
+
+
+State 48
+
+   28 additive_expression: additive_expression TOKEN_ADDOP . term
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_NUM     shift, and go to state 31
+    TOKEN_LPAREN  shift, and go to state 32
+
+    var     go to state 33
+    term    go to state 58
+    factor  go to state 37
+
+
+State 49
+
+   30 term: term TOKEN_MULOP . factor
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_NUM     shift, and go to state 31
+    TOKEN_LPAREN  shift, and go to state 32
+
+    var     go to state 33
+    factor  go to state 59
+
+
+State 50
+
+   22 if_part: TOKEN_IF TOKEN_LPAREN expression TOKEN_RPAREN . TOKEN_THEN
+
+    TOKEN_THEN  shift, and go to state 60
+
+
+State 51
+
+   24 iteration_stmt: TOKEN_WHILE TOKEN_LPAREN $@4 expression . TOKEN_RPAREN statement
+
+    TOKEN_RPAREN  shift, and go to state 61
+
+
+State 52
+
+   18 compound_stmt: TOKEN_LBRACE $@2 declarations_and_statements TOKEN_RBRACE .
+
+    $default  reduce using rule 18 (compound_stmt)
+
+
+State 53
+
+    7 var_declaration: type_specifier TOKEN_ID TOKEN_LBRACKET TOKEN_NUM . TOKEN_RBRACKET TOKEN_SEMICOLON
+
+    TOKEN_RBRACKET  shift, and go to state 62
+
+
+State 54
+
+   14 assignment_stmt: var TOKEN_ASSIGN expression TOKEN_SEMICOLON .
+
+    $default  reduce using rule 14 (assignment_stmt)
+
+
+State 55
+
+   21 selection_stmt: if_part statement TOKEN_ELSE $@3 . statement
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_IF      shift, and go to state 9
+    TOKEN_WHILE   shift, and go to state 12
+    TOKEN_LBRACE  shift, and go to state 13
+
+    statement        go to state 63
+    assignment_stmt  go to state 18
+    var              go to state 19
+    compound_stmt    go to state 20
+    selection_stmt   go to state 21
+    if_part          go to state 22
+    iteration_stmt   go to state 23
+
+
+State 56
+
+   31 factor: TOKEN_LPAREN expression TOKEN_RPAREN .
+
+    $default  reduce using rule 31 (factor)
+
+
+State 57
+
+   26 expression: additive_expression TOKEN_RELOP additive_expression .
+   28 additive_expression: additive_expression . TOKEN_ADDOP term
+
+    TOKEN_ADDOP  shift, and go to state 48
+
+    $default  reduce using rule 26 (expression)
+
+
+State 58
+
+   28 additive_expression: additive_expression TOKEN_ADDOP term .
+   30 term: term . TOKEN_MULOP factor
+
+    TOKEN_MULOP  shift, and go to state 49
+
+    $default  reduce using rule 28 (additive_expression)
+
+
+State 59
+
+   30 term: term TOKEN_MULOP factor .
+
+    $default  reduce using rule 30 (term)
+
+
+State 60
+
+   22 if_part: TOKEN_IF TOKEN_LPAREN expression TOKEN_RPAREN TOKEN_THEN .
+
+    $default  reduce using rule 22 (if_part)
+
+
+State 61
+
+   24 iteration_stmt: TOKEN_WHILE TOKEN_LPAREN $@4 expression TOKEN_RPAREN . statement
+
+    TOKEN_ID      shift, and go to state 8
+    TOKEN_IF      shift, and go to state 9
+    TOKEN_WHILE   shift, and go to state 12
+    TOKEN_LBRACE  shift, and go to state 13
+
+    statement        go to state 64
+    assignment_stmt  go to state 18
+    var              go to state 19
+    compound_stmt    go to state 20
+    selection_stmt   go to state 21
+    if_part          go to state 22
+    iteration_stmt   go to state 23
+
+
+State 62
+
+    7 var_declaration: type_specifier TOKEN_ID TOKEN_LBRACKET TOKEN_NUM TOKEN_RBRACKET . TOKEN_SEMICOLON
+
+    TOKEN_SEMICOLON  shift, and go to state 65
+
+
+State 63
+
+   21 selection_stmt: if_part statement TOKEN_ELSE $@3 statement .
+
+    $default  reduce using rule 21 (selection_stmt)
+
+
+State 64
+
+   24 iteration_stmt: TOKEN_WHILE TOKEN_LPAREN $@4 expression TOKEN_RPAREN statement .
+
+    $default  reduce using rule 24 (iteration_stmt)
+
+
+State 65
+
+    7 var_declaration: type_specifier TOKEN_ID TOKEN_LBRACKET TOKEN_NUM TOKEN_RBRACKET TOKEN_SEMICOLON .
+
+    $default  reduce using rule 7 (var_declaration)
